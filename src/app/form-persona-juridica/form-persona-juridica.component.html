@@ -1,0 +1,86 @@
+<h5 class="my-4">Titulares de Cuentas Corrientes</h5>
+
+<div class="col-md-6 col-sm-12">
+
+    <p *ngIf="creandoVar" class="border-bottom">A continuación puede crear una persona física</p>
+    <p *ngIf="!creandoVar" class="border-bottom">A continuación puede editar una persona física</p>
+
+    <article [formGroup]="form">
+
+        <div class="mb-3">
+            <label for="" class="form-label">Razon Social *</label>
+            <input formControlName="razonSocial" type="text" name="razonSocial" class="form-control">
+            <div *ngIf="(f.razonSocial.touched && f.razonSocial.invalid) || formInvalido" class="text-danger">
+                <div *ngIf="f.razonSocial.errors && f.razonSocial.errors.required">La razon social es obligatorio</div>
+                <div *ngIf="f.razonSocial.errors && f.razonSocial.errors.minlength">La razon social debe ser 3 caracteres al menos.</div>
+                <div *ngIf="f.razonSocial.errors && f.razonSocial.errors.maxlength">La razon social debe ser de menos de 100 caracteres.</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Año de Fundación *</label>
+            <input formControlName="anioFundacion" type="text" name="anioFundacion" type="text" class="form-control">
+            <div *ngIf="(f.anioFundacion.touched && f.anioFundacion.invalid) || formInvalido" class="text-danger">
+                <div *ngIf="f.anioFundacion.errors && f.anioFundacion.errors.required">El año de fundación es obligatorio</div>
+                <div *ngIf="f.anioFundacion.errors && f.anioFundacion.errors.pattern">El año de fundación debe tener solo números.</div>
+                <div *ngIf="f.anioFundacion.errors && f.anioFundacion.errors.min && !f.anioFundacion.errors.pattern">El año de fundación ser entre 1900 y 2021.</div>
+                <div *ngIf="f.anioFundacion.errors && f.anioFundacion.errors.max && !f.anioFundacion.errors.pattern">El año de fundación ser entre 1900 y 2021.</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">RUT *</label>
+            <input formControlName="rut" type="text" name="rut" class="form-control">
+            <div *ngIf="(f.rut.touched || f.rut.dirty && f.rut.invalid) || formInvalido" class="text-danger">
+                <div *ngIf="f.rut.errors && f.rut.errors.required">El rut es obligatorio</div>
+                <div *ngIf="f.rut.errors && f.rut.errors.pattern">El rut debe tener solo números.</div>
+                <div *ngIf="f.rut.errors && f.rut.errors.minlength && !f.rut.errors.pattern">El rut debe tener 8 números.</div>
+                <div *ngIf="f.rut.errors && f.rut.errors.maxlength && !f.rut.errors.pattern">El rut debe tener 8 números.</div>
+            </div>
+        </div>
+
+    </article>
+
+    <article>
+        <div [formGroup]="formCuenta" *ngIf="!sinCuenta && creandoVar" class="mb-3">
+            <label for="" class="form-label">Numero de Cuenta *</label>
+            <input formControlName="numero" type="text" name="numero" type="text" class="form-control">
+            <div *ngIf="(fCuenta.numero.touched && fCuenta.numero.invalid) || formInvalido" class="text-danger">
+                <div *ngIf="fCuenta.numero.errors && fCuenta.numero.errors.required">El numero de cuenta es obligatorio</div>
+                <div *ngIf="fCuenta.numero.errors && fCuenta.numero.errors.pattern">El numero de cuenta debe tener solo caracteres númericos.</div>
+                <div *ngIf="fCuenta.numero.errors && fCuenta.numero.errors.minlength && !fCuenta.numero.errors.pattern">El numero de cuenta debe tener 8 digitos.</div>
+                <div *ngIf="fCuenta.numero.errors && fCuenta.numero.errors.maxlength && !fCuenta.numero.errors.pattern">El numero de cuenta debe tener 8 digitos.</div>
+            </div>
+            <a class="link-primary" (click)="mostrarFormCuenta()">No tengo numero de cuenta</a>
+        </div>
+
+        <div [formGroup]="formCuentaNueva" *ngIf="sinCuenta">
+            <div class="my-4">
+                <h6 class="border-bottom my-4">Crea una cuenta corriente</h6>
+
+                <div class="my-4">
+                    <label for="" class="form-label">Moneda *</label>
+                    <select formControlName="moneda" name="moneda" type="text" class="form-select">
+                        <option value="PESOS">Pesos argentinos</option>
+                        <option value="DOLAR">Dolar</option>
+                        <option value="EURO">Euro</option>
+                    </select>
+                    <div *ngIf="(fCuentaNueva.moneda.touched && fCuentaNueva.moneda.invalid) || formInvalido" class="text-danger">
+                        <div *ngIf="fCuentaNueva.moneda.errors && fCuentaNueva.moneda.errors.required">La moneda es obligatoria</div>
+                    </div>
+                </div>
+
+                <label for="" class="form-label">Saldo *</label>
+                <input formControlName="saldo" formControlName="saldo" type="text" name="saldo" type="text" class="form-control">
+                <div *ngIf="(fCuentaNueva.saldo.touched && fCuentaNueva.saldo.invalid) || formInvalido" class="text-danger">
+                    <div *ngIf="fCuentaNueva.saldo.errors && fCuentaNueva.saldo.errors.required">El saldo es obligatorio</div>
+                    <div *ngIf="fCuentaNueva.saldo.errors && fCuentaNueva.saldo.errors.pattern">El saldo debe tener solo números</div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <button class="btn btn-success me-2" (click)="guardar()" type="button">Guardar</button>
+    <button class="btn btn-danger" type="button" [routerLink]="['/']">Cancelar</button>
+
+</div>

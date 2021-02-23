@@ -1,0 +1,85 @@
+<h5 class="my-4">Titulares de Cuentas Corrientes</h5>
+
+<div class="col-md-6 col-sm-12 mb-4">
+
+    <h6 *ngIf="creandoVar" class="border-bottom">A continuación puede crear una persona física</h6>
+    <h6 *ngIf="!creandoVar" class="border-bottom">A continuación puede editar una persona física</h6>
+
+    <article [formGroup]="form">
+
+        <div class="mb-3">
+            <label for="" class="form-label">Nombre *</label>
+            <input formControlName="nombre" type="text" name="nombre" class="form-control">
+            <div *ngIf="(f.nombre.touched && f.nombre.invalid) || formInvalido" class="text-danger">
+                <div *ngIf="f.nombre.errors && f.nombre.errors.required">El nombre es obligatorio</div>
+                <div *ngIf="f.nombre.errors && f.nombre.errors.minlength">El nombre debe tener 3 caracteres al menos.</div>
+                <div *ngIf="f.nombre.errors && f.nombre.errors.maxlength">El nombre debe tener menos de 80 caracteres.</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Apellido *</label>
+            <input formControlName="apellido" type="text" name="apellido" type="text" class="form-control">
+            <div *ngIf="(f.apellido.touched && f.apellido.invalid) || formInvalido" class="text-danger">
+                <div *ngIf="f.apellido.errors && f.apellido.errors.required">El apellido es obligatorio</div>
+                <div *ngIf="f.apellido.errors && f.apellido.errors.minlength">El apellido debe tener 3 caracteres al menos.</div>
+                <div *ngIf="f.apellido.errors && f.apellido.errors.maxlength">El apellido debe tener menos de 250 caracteres.</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">RUT *</label>
+            <input formControlName="rut" name="rut" type="text" class="form-control">
+            <div *ngIf="(f.rut.touched && f.rut.invalid) || formInvalido" class="text-danger">
+                <div *ngIf="f.rut.errors && f.rut.errors.required">El rut es obligatorio</div>
+                <div *ngIf="f.rut.errors && f.rut.errors.pattern">El rut debe tener solo números.</div>
+                <div *ngIf="f.rut.errors && f.rut.errors.minlength && !f.rut.errors.pattern">El rut debe tener 8 números.</div>
+                <div *ngIf="f.rut.errors && f.rut.errors.maxlength && !f.rut.errors.pattern">El rut debe tener 8 números.</div>
+            </div>
+        </div>
+
+    </article>
+
+    <article>
+        <div [formGroup]="formCuenta" *ngIf="!sinCuenta && creandoVar" class="mb-3">
+            <label for="" class="form-label">Numero de Cuenta *</label>
+            <input formControlName="numero" type="text" name="numero" type="text" class="form-control">
+            <div *ngIf="(fCuenta.numero.touched && fCuenta.numero.invalid) || formInvalido" class="text-danger">
+                <div *ngIf="fCuenta.numero.errors && fCuenta.numero.errors.required">El numero de cuenta es obligatorio</div>
+                <div *ngIf="fCuenta.numero.errors && fCuenta.numero.errors.pattern">El numero de cuenta debe tener solo caracteres númericos.</div>
+                <div *ngIf="fCuenta.numero.errors && fCuenta.numero.errors.minlength && !fCuenta.numero.errors.pattern">El numero de cuenta debe tener 8 digitos.</div>
+                <div *ngIf="fCuenta.numero.errors && fCuenta.numero.errors.maxlength && !fCuenta.numero.errors.pattern">El numero de cuenta debe tener 8 digitos.</div>
+            </div>
+            <a class="link-primary" (click)="mostrarFormCuenta()">No tengo numero de cuenta</a>
+        </div>
+
+        <div [formGroup]="formCuentaNueva" *ngIf="sinCuenta">
+            <div class="my-4">
+                <h6 class="border-bottom my-4">Crea una cuenta corriente</h6>
+
+                <div class="my-4">
+                    <label for="" class="form-label">Moneda *</label>
+                    <select formControlName="moneda" name="moneda" type="text" class="form-select">
+                        <option value="PESOS">Pesos argentinos</option>
+                        <option value="DOLAR">Dolar</option>
+                        <option value="EURO">Euro</option>
+                    </select>
+                    <div *ngIf="(fCuentaNueva.moneda.touched && fCuentaNueva.moneda.invalid) || formInvalido" class="text-danger">
+                        <div *ngIf="fCuentaNueva.moneda.errors && fCuentaNueva.moneda.errors.required">La moneda es obligatoria</div>
+                    </div>
+                </div>
+
+                <label for="" class="form-label">Saldo *</label>
+                <input formControlName="saldo" formControlName="saldo" type="text" name="saldo" type="text" class="form-control">
+                <div *ngIf="(fCuentaNueva.saldo.touched && fCuentaNueva.saldo.invalid) || formInvalido" class="text-danger">
+                    <div *ngIf="fCuentaNueva.saldo.errors && fCuentaNueva.saldo.errors.required">El saldo es obligatorio</div>
+                    <div *ngIf="fCuentaNueva.saldo.errors && fCuentaNueva.saldo.errors.pattern">El saldo debe tener solo números</div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <button class="btn btn-success me-2" (click)="guardar()" type="button">Guardar</button>
+    <button class="btn btn-danger" type="button" [routerLink]="['/']">Cancelar</button>
+
+</div>
